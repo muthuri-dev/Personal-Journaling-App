@@ -12,24 +12,47 @@ input AuthDto {
   username: String!
 }
 
+input CreateJournalDto {
+  category: String!
+  content: String!
+  date: String!
+  feeling: String!
+  title: String!
+  user_id: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
 
+type Journal {
+  category: String!
+  content: String!
+  created_at: DateTime!
+  date: String!
+  feeling: String!
+  id: ID!
+  title: String!
+  updated_at: DateTime!
+  user_name: String!
+}
+
 type Mutation {
+  createJournal(createDto: CreateJournalDto!): Journal!
   login(authDto: AuthDto!): Auth!
   register(authDto: AuthDto!): User!
-  updateUser(updateDto: UpdateUserDto!): User!
+  removeJournal(id: String!): Journal!
+  updateUserPassword(updateDto: UpdateUserDto!): User!
 }
 
 type Query {
+  journals(username: String!): [Journal!]!
   user(username: String!): User!
   users: [User!]!
 }
 
 input UpdateUserDto {
-  id: ID!
   password: String
   username: String
 }
@@ -37,7 +60,7 @@ input UpdateUserDto {
 type User {
   created_at: DateTime!
   id: ID!
-  journal: String
+  journal: [Journal!]
   updated_at: DateTime!
   username: String!
 }

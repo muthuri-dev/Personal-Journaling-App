@@ -31,8 +31,11 @@ model Journal {
   date       String
   category   String
   feeling    String
-  user       User?    @relation(fields: [user_id], references: [id])
-  user_id    String
+  user       User?    @relation(fields: [user_name], references: [id])
+  user_name  String?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  @@index([user_name])
+  @@map("journals")
 }

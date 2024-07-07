@@ -1,4 +1,5 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Journal } from 'src/journals/entities/journal.entity';
 
 @ObjectType()
 export class User {
@@ -8,8 +9,8 @@ export class User {
   @Field()
   username: string;
 
-  @Field({ nullable: true })
-  journal?: string;
+  @Field(() => [Journal], { nullable: true })
+  journal?: Journal[];
 
   @Field()
   created_at: Date;

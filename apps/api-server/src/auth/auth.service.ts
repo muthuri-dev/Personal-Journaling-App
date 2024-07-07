@@ -15,7 +15,7 @@ export class AuthService {
   //validating user
 
   async validateUser(username: string, password: string) {
-    const user = await this.usersService.findUser(username);
+    const user = await this.usersService.find(username);
 
     if (!user) throw new BadRequestException('Enter correct username');
 
@@ -30,8 +30,8 @@ export class AuthService {
 
   //login user service
   async login(user: User) {
-    //TODO: Implement jwt here - done
-    return {
+    //TODO: Implement jwt here - done ✅
+    return await {
       access_token: this.jwtService.sign({
         username: user.username,
         sub: user.id,
@@ -40,14 +40,14 @@ export class AuthService {
     };
   }
 
-  //register user
+  //registering new user
   async register(authDto: AuthDto) {
-    const user = await this.usersService.findUser(authDto.username);
+    const user = await this.usersService.find(authDto.username);
 
     if (user) throw new Error('User with username already exists');
 
     const hashedPassword = await bcrypt.hash(authDto.password, 10);
-    return this.usersService.createUser({
+    return await this.usersService.create({
       ...authDto,
       password: hashedPassword,
     });

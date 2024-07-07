@@ -6,6 +6,7 @@ import { join } from 'path';
 import { PrismadbService } from './prismadb/prismadb.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { JournalsModule } from './journals/journals.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     UsersModule,
     AuthModule,
+    JournalsModule,
   ],
   providers: [ConfigService, PrismadbService],
 })
