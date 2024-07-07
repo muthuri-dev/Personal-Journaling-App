@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "cockroachdb"
   url      = env("DATABASE_URL")
 }
 
@@ -21,7 +21,7 @@ model User {
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
 
-  @@map("users")
+  @@map("users_shamili")
 }
 
 model Journal {
@@ -37,5 +37,5 @@ model Journal {
   updated_at DateTime @updatedAt
 
   @@index([user_name])
-  @@map("journals")
+  @@map("journals_shamili")
 }
