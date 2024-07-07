@@ -56,7 +56,7 @@ const Create = ({ onNavigate }: CreatePageProps) => {
   });
 
   const submit = () => {
-    if (!date || !title || content) {
+    if (!title || !content) {
       Alert.alert("Error", "Pleas fill in all the fields");
     }
     try {
@@ -71,7 +71,7 @@ const Create = ({ onNavigate }: CreatePageProps) => {
         },
       });
     } catch (error: any) {
-      Alert.alert("Error", error.message);
+      console.log(error);
     }
   };
   return (

@@ -31,7 +31,7 @@ model Journal {
   date       String
   category   String
   feeling    String
-  user       User?    @relation(fields: [user_name], references: [id])
+  user       User?    @relation(fields: [user_name], references: [username])
   user_name  String?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
