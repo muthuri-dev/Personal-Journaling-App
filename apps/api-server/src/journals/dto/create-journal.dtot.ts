@@ -18,5 +18,5 @@ export class CreateJournalDto {
   feeling: string;
 
   @Field()
-  user_id: string;
+  username: string;
 }

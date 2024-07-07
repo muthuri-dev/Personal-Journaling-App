@@ -1,4 +1,4 @@
-import { router, Redirect } from "expo-router";
+import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -25,7 +25,7 @@ export default function App() {
           </Text>
 
           <TouchableOpacity
-            onPress={() => router.push("/login")}
+            onPress={() => router.push("/register")}
             className="bg-dark_green w-full rounded-lg mt-16"
           >
             <Text className="text-white  my-4 text-center font-latpBolditalick">

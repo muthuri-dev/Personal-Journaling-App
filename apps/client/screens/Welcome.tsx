@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { useCreate } from "@/store/useCreate";
+import { useAuthStore } from "@/store/useAuthStore";
 
 //from assets
 const homeImage = require("@/assets/images/thoughts.png");
@@ -42,21 +43,26 @@ const Welcome = ({ onNavigate }: WelcomePageProps) => {
     { image: loveImage, mood: "lovely" },
   ];
 
-  //handling globals store
+  //handling globals create store
   const { setMood } = useCreate();
   const submit = (mood: string) => {
     onNavigate(2);
     setMood(mood);
   };
+
+  //getting username from auth store
+  const { username } = useAuthStore();
   return (
     <>
       <View className="w-full items-end mt-2 px-3">
         <View className="bg-dark_green justify-center items-center rounded-full h-10 w-10">
-          <Text className="text-white ">KM</Text>
+          <Text className="text-white font-spaceMono text-2xl">
+            {username.charAt(0).toLocaleUpperCase()}
+          </Text>
         </View>
       </View>
       <Text className=" text-white font-playwrite text-center text-xl pt-5">
-        {timeOfDayMessage} Kennedy
+        {timeOfDayMessage} {username}
       </Text>
       <Image
         source={homeImage}

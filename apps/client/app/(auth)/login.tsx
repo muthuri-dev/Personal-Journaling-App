@@ -11,6 +11,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, router } from "expo-router";
 import FormField from "@/components/FormField";
 import Button from "@/components/Button";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "@/graphql/auth.actions";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const loginImage = require("@/assets/images/login.png");
 
@@ -20,20 +23,31 @@ const login = () => {
     username: "",
   });
 
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  //graphql actions
+  const [loginUser, { loading }] = useMutation(LOGIN_USER, {
+    onCompleted(data) {
+      Alert.alert("Log in successful");
+      router.replace("/home");
+      useAuthStore.getState().setToken(data.login.access_token);
+      useAuthStore.getState().setUsername(data.login.user.username);
+    },
+    onError(error) {
+      console.log(error);
+      Alert.alert("Error occured");
+    },
+  });
 
   const submit = async () => {
     if (!form.password || !form.username) {
       Alert.alert("Error", "Pleas fill in all the fields");
     }
-    setIsLoading(!isLoading);
     try {
-      //  router.replace("/home");
+      loginUser({
+        variables: { username: form.username, password: form.password },
+      });
     } catch (error: any) {
       Alert.alert("Error", error);
       console.log(error);
-    } finally {
-      setIsLoading(false);
     }
   };
   return (
@@ -65,8 +79,20 @@ const login = () => {
             placehoder="password"
             placehoderTextColor="white"
           />
-          <Button title="Login" isLoading={isLoading} handlePress={submit} />
-          <Link href="/home">Home</Link>
+          <TouchableOpacity
+            onPress={submit}
+            className="bg-dark_green w-full py-6 rounded-lg mt-6 "
+          >
+            {loading ? (
+              <Text className="text-white text-center font-workSansItalic">
+                Logging in...
+              </Text>
+            ) : (
+              <Text className="text-white text-center font-workSansItalic">
+                Login in
+              </Text>
+            )}
+          </TouchableOpacity>
           <View className="justify-center flex-row pt-5 gap-2">
             <Text className="text-lg text-gray-100 font-spaceMono">
               Dont have account already?

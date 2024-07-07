@@ -1,6 +1,7 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { useCreate } from "@/store/useCreate";
+import { useAuthStore } from "@/store/useAuthStore";
 
 //from assets
 const sadImage = require("@/assets/images/sad.png");
@@ -52,11 +53,16 @@ const Mood = ({ onNavigate }: MoodPageProps) => {
     onNavigate(3);
     setFeel(feel);
   };
+
+  //getting username from auth store
+  const { username } = useAuthStore();
   return (
     <>
       <View className="w-full items-end mt-2 px-3">
         <View className="bg-dark_green justify-center items-center rounded-full h-10 w-10">
-          <Text className="text-white ">KM</Text>
+          <Text className="text-white font-spaceMono text-2xl">
+            {username.charAt(0).toLocaleUpperCase()}
+          </Text>
         </View>
       </View>
       <View className="mt-20">
