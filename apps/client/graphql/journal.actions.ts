@@ -2,23 +2,44 @@ import { gql } from "@apollo/client";
 
 export const CREATE_JOURNAL = gql`
   mutation CreateJournal(
-    $user_name: String!
-    $title: String!
-    $content: String!
     $category: String!
-    $feeling: String!
+    $content: String!
     $date: String!
+    $feeling: String!
+    $title: String!
+    $user_name: String!
   ) {
     createJournal(
       createDto: {
-        username: $user_name
-        title: $title
-        content: $content
         category: $category
-        feeling: $feeling
+        content: $content
         date: $date
+        feeling: $feeling
+        title: $title
+        user_name: $user_name
       }
     ) {
+      id
+    }
+  }
+`;
+
+export const GET_USER_JOURNALS = gql`
+  query Journals($username: String!) {
+    journals(username: $username) {
+      category
+      content
+      date
+      feeling
+      id
+      title
+    }
+  }
+`;
+
+export const REMOVE_JOURNAL = gql`
+  mutation RemoveJournal($id: String!) {
+    removeJournal(id: $id) {
       id
     }
   }

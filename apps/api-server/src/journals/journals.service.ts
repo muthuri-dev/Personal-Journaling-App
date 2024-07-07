@@ -17,6 +17,13 @@ export class JournalsService {
   }
 
   async remove(id: string) {
+    const journal = await this.prismaService.journal.findUnique({
+      where: { id: id },
+    });
+
+    if (!journal) {
+      throw new Error(`Journal entry does not exist.`);
+    }
     return await this.prismaService.journal.delete({ where: { id } });
   }
 }

@@ -13,6 +13,7 @@ import Button from "@/components/Button";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useMutation } from "@apollo/client";
 import { CREATE_JOURNAL } from "@/graphql/journal.actions";
+import { router } from "expo-router";
 
 //navigation for screens
 interface CreatePageProps {
@@ -45,34 +46,31 @@ const Create = ({ onNavigate }: CreatePageProps) => {
 
   //TODO : Submit data to the database through api
   const [createJournal, { loading }] = useMutation(CREATE_JOURNAL, {
-    onCompleted(data, clientOptions) {
-      console.log(data);
-      Alert.alert("Moments created ");
+    onCompleted: () => {
+      Alert.alert("Moments created");
+      router.replace("/moments");
     },
-    onError(error, clientOptions) {
-      console.log(error);
-      Alert.alert("Error occured when creating moment ");
+    onError: (error) => {
+      Alert.alert("Failed to create moments", error.message);
     },
   });
 
-  const submit = () => {
-    if (!title || !content) {
+  const submit = async () => {
+    if (!title || !content || !date) {
       Alert.alert("Error", "Pleas fill in all the fields");
     }
-    try {
-      createJournal({
-        variables: {
-          user_name: username,
-          title,
-          content,
-          category,
-          feeling: mood,
-          date: date.toLocaleString(),
-        },
-      });
-    } catch (error: any) {
-      console.log(error);
-    }
+    const formattedDate = date.toLocaleString();
+
+    await createJournal({
+      variables: {
+        user_name: username,
+        title,
+        content,
+        category,
+        feeling: mood,
+        date: formattedDate,
+      },
+    });
   };
   return (
     <>

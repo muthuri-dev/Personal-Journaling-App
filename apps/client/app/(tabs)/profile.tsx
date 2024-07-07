@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   ScrollView,
   Text,
@@ -10,13 +11,40 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "@/components/Button";
 import { StatusBar } from "expo-status-bar";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useMutation } from "@apollo/client";
+import { UPDATE_PASSWORD } from "@/graphql/profile.actions";
 
 const profileImage = require("@/assets/images/profile.png");
 const profile = () => {
-  const [showNameInput, setShowNameInput] = React.useState<boolean>(false);
   const [showPassInput, setShowPassInput] = React.useState<boolean>(false);
-  const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
+
+  //getting username from the dtore
+  const { username } = useAuthStore();
+
+  //graphql actions
+  const [updatePassword, { loading }] = useMutation(UPDATE_PASSWORD, {
+    onCompleted: () => {
+      Alert.alert("Password Updated");
+    },
+    onError: (error) => {
+      Alert.alert("Failed to update password", error.message);
+    },
+  });
+
+  //submiting data
+  const submit = () => {
+    if (!password) {
+      Alert.alert("Enter password to update");
+    }
+    updatePassword({
+      variables: {
+        password,
+        username,
+      },
+    });
+  };
   return (
     <SafeAreaView className="h-full bg-[#438f78]">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
@@ -27,28 +55,20 @@ const profile = () => {
             className="w-full h-60 rounded-full mt-5 border border-dark_grey"
           />
           <Text className="text-xl font-spaceMono text-white text-center">
-            Kennedy
+            {username}
           </Text>
           <View className="mt-7">
-            <Text className="text-white text-lg font-spaceMono">
+            <Text className="text-white text-lg font-spaceMono underline">
               Personal Information
             </Text>
             <View className="flex-row justify-between gap-2 mt-4">
-              <Text className="text-white font-spaceMono text-lg rounded-md border border-dark_green pl-2  flex-1">
-                Kennedy
+              <Text className="text-white font-spaceMono text-xl rounded-md border border-dark_green p-4  flex-1">
+                {username}
               </Text>
-              <TouchableOpacity
-                onPress={() => setShowNameInput(!showNameInput)}
-                className={`bg-dark_green w-1/4 py-2 rounded-lg mt-6 `}
-              >
-                <Text className={`text-white text-center font-workSansItalic`}>
-                  Update
-                </Text>
-              </TouchableOpacity>
             </View>
             <View className="flex-row justify-between">
               <Text className="text-white font-spaceMono text-lg rounded-md mt-3 mr-2 border border-dark_green pl-2 flex-1">
-                *****
+                Update password
               </Text>
               <TouchableOpacity
                 onPress={() => setShowPassInput(!showPassInput)}
@@ -59,27 +79,7 @@ const profile = () => {
                 </Text>
               </TouchableOpacity>
             </View>
-            {showNameInput && (
-              <View className="border border-dark_green p-1 mt-5">
-                <TextInput
-                  value={username}
-                  placeholder="username"
-                  placeholderTextColor="white"
-                  className="font-spaceMono border border-dark_green p-4 mt-5 rounded-xl"
-                  onChangeText={setUsername}
-                />
-                <TouchableOpacity
-                  onPress={() => {}}
-                  className={`bg-dark_green w-1/4 py-2 rounded-lg mt-6`}
-                >
-                  <Text
-                    className={`text-white text-center font-workSansItalic`}
-                  >
-                    submit
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            )}
+
             {showPassInput && (
               <View className="border border-dark_green p-1 mt-5">
                 <TextInput
@@ -90,14 +90,18 @@ const profile = () => {
                   onChangeText={setPassword}
                 />
                 <TouchableOpacity
-                  onPress={() => {}}
-                  className={`bg-dark_green w-1/4 py-2 rounded-lg mt-6 `}
+                  onPress={submit}
+                  className="bg-dark_green w-1/4 py-2 rounded-lg mt-6 "
                 >
-                  <Text
-                    className={`text-white text-center font-workSansItalic`}
-                  >
-                    submit
-                  </Text>
+                  {loading ? (
+                    <Text className="text-white text-center font-workSansItalic">
+                      Submit ...
+                    </Text>
+                  ) : (
+                    <Text className="text-white text-center font-workSansItalic">
+                      Submit
+                    </Text>
+                  )}
                 </TouchableOpacity>
               </View>
             )}
