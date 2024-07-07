@@ -38,6 +38,10 @@ const Journal = () => {
     },
   });
 
+  const handleDelete = () => {
+    deleteJournal({ variables: { id } });
+  };
+
   return (
     <SafeAreaView className="h-full bg-[#438f78]">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
@@ -62,9 +66,7 @@ const Journal = () => {
           actions={actions}
           actionsPaddingTopBottom={1}
           showBackground={false}
-          onPressItem={(id) => {
-            deleteJournal({ variables: { id } });
-          }}
+          onPressItem={handleDelete}
         />
       </ScrollView>
     </SafeAreaView>

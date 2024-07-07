@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useQuery } from "@apollo/client";
 import { GET_USER_JOURNALS } from "@/graphql/journal.actions";
 import { useAuthStore } from "@/store/useAuthStore";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import { FloatingAction } from "react-native-floating-action";
 
 interface IJournal {
@@ -27,7 +27,7 @@ const create = () => {
   //getting username from global store
   const { username } = useAuthStore();
   //graph actions
-  const { data, loading, refetch } = useQuery(GET_USER_JOURNALS, {
+  const { data, refetch } = useQuery(GET_USER_JOURNALS, {
     variables: { username },
   });
   const journals: IJournal[] = data?.journals;
@@ -72,6 +72,19 @@ const create = () => {
               </View>
             </View>
           </TouchableOpacity>
+        )}
+        ListEmptyComponent={() => (
+          <View className="justify-center items-center">
+            <Text className="text-white text-2xt font-spaceMono">
+              Add moments to see them
+            </Text>
+            <Link
+              href="/home"
+              className="text-dark_green mt-5 underline font-playwrite"
+            >
+              Home to create moment
+            </Link>
+          </View>
         )}
         ListHeaderComponent={() => (
           <View className="flex flex-row justify-between p-3">
