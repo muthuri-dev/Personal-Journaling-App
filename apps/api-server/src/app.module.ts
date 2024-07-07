@@ -11,6 +11,7 @@ import { JournalsModule } from './journals/journals.module';
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
+      introspection: true,
       driver: ApolloDriver,
       sortSchema: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
