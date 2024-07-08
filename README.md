@@ -22,6 +22,13 @@ Personal Journaling App is a sleek and intuitive platform designed to help you d
 <p align="center">
   <img src="https://github.com/muthuri-dev/Personal-Journaling-App/assets/82339780/ab1f291b-38e2-441e-a033-c66031a56466" width="800"/>
 </p>
+
+## Demo of the app
+
+https://github.com/muthuri-dev/portifolio/assets/82339780/94631cd4-9e73-4234-8bfd-31081ea0b792
+
+
+
 ## Features
 
 Jornal comes with a wide range of features tailored for horse care:
