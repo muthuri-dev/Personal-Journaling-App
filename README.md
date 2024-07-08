@@ -24,7 +24,7 @@ Personal Journaling App is a sleek and intuitive platform designed to help you d
 </p>
 ## Features
 
-Codelabs comes with a wide range of features tailored for horse care:
+Jornal comes with a wide range of features tailored for horse care:
 
 - **Login register**: One can be able to create account and secure the data.
 - **Create journals**: Write down your thoughts , moments and experiences.
