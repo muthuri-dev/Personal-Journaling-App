@@ -1,4 +1,7 @@
-# Personal-Journaling-App
+
+<p align="center">
+ <h1> Personal-Journaling-App</h1>
+</p>
 
 Personal Journaling App is a sleek and intuitive platform designed to help you document your thoughts, experiences, and reflections effortlessly. Whether you're a daily journaler or someone who writes sporadically, this app caters to your needs with a range of customizable features and a user-friendly interface.
 
@@ -23,9 +26,21 @@ Personal Journaling App is a sleek and intuitive platform designed to help you d
   <img src="https://github.com/muthuri-dev/Personal-Journaling-App/assets/82339780/ab1f291b-38e2-441e-a033-c66031a56466" width="800"/>
 </p>
 
+
 ## Features
 
 Journal comes with a wide range of features tailored for horse care:
+
+## Demo of the app
+
+https://github.com/muthuri-dev/portifolio/assets/82339780/94631cd4-9e73-4234-8bfd-31081ea0b792
+
+
+
+## Features
+
+Jornal comes with a wide range of features tailored for horse care:
+
 
 - **Login register**: One can be able to create account and secure the data.
 - **Create journals**: Write down your thoughts , moments and experiences.
