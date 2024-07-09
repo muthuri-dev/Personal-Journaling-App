@@ -22,9 +22,10 @@ Personal Journaling App is a sleek and intuitive platform designed to help you d
 <p align="center">
   <img src="https://github.com/muthuri-dev/Personal-Journaling-App/assets/82339780/ab1f291b-38e2-441e-a033-c66031a56466" width="800"/>
 </p>
+
 ## Features
 
-Codelabs comes with a wide range of features tailored for horse care:
+Journal comes with a wide range of features tailored for horse care:
 
 - **Login register**: One can be able to create account and secure the data.
 - **Create journals**: Write down your thoughts , moments and experiences.
@@ -50,7 +51,7 @@ To start using Equine Tracker, follow these installation steps:
 3. Install the required dependencies:
 
    ```bash
-   # for app
+   # for expo app
    cd apps/client && npm install
     # for api
    cd apps/api-server && npm install
@@ -59,7 +60,7 @@ To start using Equine Tracker, follow these installation steps:
 4. Start the application:
 
    ```bash
-   # for app
+   # for expo app
    npx expo start
    # for api-server
    npm run start:dev
@@ -129,6 +130,292 @@ export default client;
 
 ```
 
+## Api Documentation
+
+### register user mutation
+
+```bash
+# mutation
+mutation Register {
+    register(authDto: { password: "12", username: "kennedy" }) {
+        created_at
+        id
+        updated_at
+        username
+    }
+}
+
+# response
+{
+    "data": {
+        "register": {
+            "created_at": "2024-07-09T06:20:57.787Z",
+            "id": "clye0vuil0000kijucda5eejp",
+            "updated_at": "2024-07-09T06:20:57.787Z",
+            "username": "kennedy"
+        }
+    }
+}
+
+```
+
+### login user mutation
+
+```bash
+# mutation
+mutation Login {
+    login(authDto: { password: "12", username: "kennedy" }) {
+        access_token
+        user {
+            created_at
+            id
+            updated_at
+            username
+            journal {
+                category
+                content
+                created_at
+                date
+                feeling
+                id
+                title
+                updated_at
+                user_name
+            }
+        }
+    }
+}
+
+
+# response
+{
+    "data": {
+        "login": {
+            "access_token": "eyJhbGciOiJIUzI1Ni ****",
+            "user": {
+                "created_at": "2024-07-09T06:20:57.787Z",
+                "id": "clye0vuil0000kijucda5eejp",
+                "updated_at": "2024-07-09T06:20:57.787Z",
+                "username": "kennedy",
+                "journal": null
+            }
+        }
+    }
+}
+
+```
+
+### create journal mutation
+
+```bash
+# mutation
+mutation CreateJournal {
+    createJournal(
+        createDto: {
+            category: "work"
+            content: "Did app documentation"
+            date: "07/07/24"
+            feeling: "happy"
+            title: "App documentation"
+            user_name: "kennedy"
+        }
+    ) {
+        category
+        content
+        created_at
+        date
+        feeling
+        id
+        title
+        updated_at
+        user_name
+    }
+}
+ pass access_token : "access_token": "eyJhbGciOiJIUzI1Ni ****",
+
+# response
+{
+    "data": {
+        "createJournal": {
+            "category": "work",
+            "content": "Did app documentation",
+            "created_at": "2024-07-09T06:32:56.075Z",
+            "date": "07/07/24",
+            "feeling": "happy",
+            "id": "clye1b92i0002kiju4cjst4or",
+            "title": "App documentation",
+            "updated_at": "2024-07-09T06:32:56.075Z",
+            "user_name": "kennedy"
+        }
+    }
+}
+
+```
+
+### get user journals query
+
+```bash
+# query
+query Journals {
+    journals(username: "kennedy") {
+        category
+        content
+        created_at
+        date
+        feeling
+        id
+        title
+        updated_at
+        user_name
+    }
+}
+
+ pass access_token : "access_token": "eyJhbGciOiJIUzI1Ni ****",
+
+# response
+{
+    "data": {
+        "journals": [
+            {
+                "category": "work",
+                "content": "Did app documentation",
+                "created_at": "2024-07-09T06:32:56.075Z",
+                "date": "07/07/24",
+                "feeling": "happy",
+                "id": "clye1b92i0002kiju4cjst4or",
+                "title": "App documentation",
+                "updated_at": "2024-07-09T06:32:56.075Z",
+                "user_name": "kennedy"
+            }
+        ]
+    }
+}
+
+```
+
+### remove journal mutation
+
+```bash
+# mutation
+mutation RemoveJournal {
+    removeJournal(id: "clye1b92i0002kiju4cjst4or") {
+        category
+        content
+        created_at
+        date
+        feeling
+        id
+        title
+        updated_at
+        user_name
+    }
+}
+
+
+ pass access_token : "access_token": "eyJhbGciOiJIUzI1Ni ****",
+
+# response
+{
+    "data": {
+        "removeJournal": {
+            "category": "work",
+            "content": "Did app documentation",
+            "created_at": "2024-07-09T06:32:56.075Z",
+            "date": "07/07/24",
+            "feeling": "happy",
+            "id": "clye1b92i0002kiju4cjst4or",
+            "title": "App documentation",
+            "updated_at": "2024-07-09T06:32:56.075Z",
+            "user_name": "kennedy"
+        }
+    }
+}
+```
+
+### update password mutation
+
+```bash
+# mutation
+mutation UpdateUserPassword {
+    updateUserPassword(updateDto: { password: "123", username: "kennedy" }) {
+        created_at
+        id
+        updated_at
+        username
+    }
+}
+
+
+
+ pass access_token : "access_token": "eyJhbGciOiJIUzI1Ni ****",
+
+# response
+{
+    "data": {
+        "updateUserPassword": {
+            "created_at": "2024-07-09T06:20:57.787Z",
+            "id": "clye0vuil0000kijucda5eejp",
+            "updated_at": "2024-07-09T06:40:29.100Z",
+            "username": "kennedy"
+        }
+    }
+}
+```
+
+### errors of not passing access_token
+
+```bash
+# example get all users muatation
+query Users {
+    users {
+        created_at
+        id
+        updated_at
+        username
+    }
+}
+
+
+# response
+{
+    "errors": [
+        {
+            "message": "Unauthorized",
+            "locations": [
+                {
+                    "line": 2,
+                    "column": 5
+                }
+            ],
+            "path": [
+                "users"
+            ],
+            "extensions": {
+                "code": "UNAUTHENTICATED",
+                "stacktrace": [
+                    "UnauthorizedException: Unauthorized",
+                    "    at JwtAuthGuard.handleRequest (/src/src/auth/guards/jwt.guard.ts:17:20)",
+                    "    at /src/node_modules/@nestjs/passport/dist/auth.guard.js:44:124",
+                    "    at /src/node_modules/@nestjs/passport/dist/auth.guard.js:83:24",
+                    "    at allFailed (/src/node_modules/passport/lib/middleware/authenticate.js:110:18)",
+                    "    at attempt (/src/node_modules/passport/lib/middleware/authenticate.js:183:28)",
+                    "    at strategy.fail (/src/node_modules/passport/lib/middleware/authenticate.js:314:9)",
+                    "    at /src/node_modules/passport-jwt/lib/strategy.js:106:33",
+                    "    at /src/node_modules/jsonwebtoken/verify.js:171:14",
+                    "    at getSecret (/src/node_modules/jsonwebtoken/verify.js:97:14)",
+                    "    at module.exports [as verify] (/src/node_modules/jsonwebtoken/verify.js:101:10)"
+                ],
+                "originalError": {
+                    "message": "Unauthorized",
+                    "statusCode": 401
+                }
+            }
+        }
+    ],
+    "data": null
+}
+```
+
 ## Contributing
 
 We welcome contributions from the community! If you have ideas for improvements, bug reports, or want to contribute code, please check our [Contribution Guidelines](CONTRIBUTING.md) for details on how to get involved.
@@ -142,3 +429,11 @@ Equine Tracker is open-source software licensed under the Apache License 2.0. Fo
 We'd like to extend our gratitude to the equestrian community for their support and inspiration.
 
 Thank you for choosing us!
+
+```bash
+  function currentMood(mood:string):string{
+    return mood;
+  }
+
+  currentMood("happy 😂")
+```
